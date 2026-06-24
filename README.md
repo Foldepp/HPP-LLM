@@ -56,10 +56,10 @@ Die statische Webseite liegt unter `website-template/index.html`.
 ## Aktueller Funktionsstand
 
 - Modell-Auswahl mit Praxis-Modi:
-  - `Praxis Sicher` fuer sensible Inhalte ueber lokales Ollama-Modell
-  - `Praxis Schnell` fuer unkritische Cloud-Aufgaben
-  - `Praxis Stark` fuer anspruchsvollere Cloud-Aufgaben
-  - `DeepSeek Test` als zusaetzlicher Provider-Test
+  - `Praxis Sicher (lokal)` fuer sensible Inhalte ueber lokales Ollama-Modell
+  - `Praxis Schnell (Cloud)` fuer unkritische Cloud-Aufgaben
+  - `Praxis Stark (Cloud)` fuer anspruchsvollere Cloud-Aufgaben
+  - `DeepSeek Test (Cloud)` als zusaetzlicher Provider-Test
 - Lokale Embeddings ueber `nomic-embed-text`
 - RAG-Test mit synthetischen Praxisdokumenten
 - LiteLLM-Guardrail gegen versehentliche Cloud-Verarbeitung sensibler Inhalte

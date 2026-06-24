@@ -4,7 +4,7 @@ cache: true
 fileStrategy: "local"
 
 interface:
-  customWelcome: "Willkommen im sicheren KI-Arbeitsplatz für KMUs."
+  customWelcome: "Willkommen im Praxis-KI-Arbeitsplatz. Fuer vertrauliche Inhalte bitte immer Praxis Sicher (lokal) verwenden."
   fileSearch: true
   modelSelect: true
   parameters: false
@@ -49,8 +49,8 @@ modelSpecs:
     - "agents"
   list:
     - name: "praxis-sicher"
-      label: "Praxis Sicher"
-      description: "Lokaler Modus für Patientendaten, Praxisdokumente und vertrauliche Notizen."
+      label: "Praxis Sicher (lokal)"
+      description: "LOKALER Modus für Patientendaten, Praxisdokumente und vertrauliche Notizen. Standard für sensible Inhalte."
       group: "Praxis-Modi"
       groupIcon: "custom"
       default: true
@@ -63,6 +63,7 @@ modelSpecs:
         model: "mvp-local-sensitive"
         temperature: 0.2
         promptPrefix: |
+          Arbeitsmodus: LOKAL. Dieser Modus ist fuer vertrauliche Praxis- und Patientendaten vorgesehen.
           Du bist der lokale Praxis-Sicher-Assistent einer Heilpraktikerpraxis.
           Verarbeite vertrauliche Praxis- und Patientendaten nur unterstützend und strukturiert.
           Stelle keine Diagnosen, gib keine Therapieentscheidungen und keine Dosierungsempfehlungen.
@@ -74,8 +75,8 @@ modelSpecs:
         - "Fasse diese Verlaufsnotiz intern zusammen, ohne Diagnose oder Therapieempfehlung."
 
     - name: "praxis-schnell"
-      label: "Praxis Schnell"
-      description: "Cloud-Modus für unkritische Texte, Organisation und allgemeine Praxisarbeit. Keine Patientendaten eingeben."
+      label: "Praxis Schnell (Cloud)"
+      description: "CLOUD-Modus für unkritische Texte, Organisation und allgemeine Praxisarbeit. Keine Patientendaten eingeben."
       group: "Praxis-Modi"
       showIconInMenu: true
       showIconInHeader: true
@@ -85,9 +86,10 @@ modelSpecs:
         model: "mvp-standard"
         temperature: 0.4
         promptPrefix: |
+          Arbeitsmodus: CLOUD. Dieser Modus ist nur fuer unkritische, nicht vertrauliche Inhalte vorgesehen.
           Du bist der schnelle Praxis-Assistent für unkritische Aufgaben.
           In diesem Modus dürfen keine Patientendaten, Gesundheitsdaten, Anamnesen, Laborwerte oder vertraulichen Praxisnotizen verarbeitet werden.
-          Wenn die Anfrage sensible Patientendaten enthält oder danach aussieht, lehne die Verarbeitung ab und fordere den Wechsel zu "Praxis Sicher" an.
+          Wenn die Anfrage sensible Patientendaten enthält oder danach aussieht, lehne die Verarbeitung ab und fordere den Wechsel zu "Praxis Sicher (lokal)" an.
       conversation_starters:
         - "Formuliere einen freundlichen Website-Abschnitt über eine Heilpraktikerpraxis, ohne Heilversprechen."
         - "Erstelle eine interne Checkliste für Terminvorbereitung ohne Patientendaten."
@@ -95,8 +97,8 @@ modelSpecs:
         - "Erstelle eine kurze Terminerinnerung ohne personenbezogene Daten."
 
     - name: "praxis-stark"
-      label: "Praxis Stark"
-      description: "Stärkeres Cloud-Modell für Konzepte, Schulungen und längere Texte. Keine Patientendaten eingeben."
+      label: "Praxis Stark (Cloud)"
+      description: "CLOUD-Modus mit stärkerem Modell für Konzepte, Schulungen und längere Texte. Keine Patientendaten eingeben."
       group: "Praxis-Modi"
       showIconInMenu: true
       showIconInHeader: true
@@ -106,8 +108,9 @@ modelSpecs:
         model: "mvp-premium"
         temperature: 0.35
         promptPrefix: |
+          Arbeitsmodus: CLOUD. Dieser Modus ist nur fuer nicht-sensitive Konzepte, Schulungen und allgemeine Textarbeit vorgesehen.
           Du bist der starke Praxis-Assistent für nicht-sensitive Konzepte, Schulungen und allgemeine Textarbeit.
-          Verarbeite keine Patientendaten oder Gesundheitsdaten. Wenn solche Inhalte auftauchen, fordere den Wechsel zu "Praxis Sicher" an.
+          Verarbeite keine Patientendaten oder Gesundheitsdaten. Wenn solche Inhalte auftauchen, fordere den Wechsel zu "Praxis Sicher (lokal)" an.
       conversation_starters:
         - "Entwirf eine Schulungsstruktur: sichere KI-Nutzung in kleinen Praxen."
         - "Erstelle ein Beratungskonzept für KMUs mit sensiblen Daten."
@@ -115,8 +118,8 @@ modelSpecs:
         - "Formuliere eine 10-Minuten-Demo-Story für den Heilpraktiker-Mustercase."
 
     - name: "deepseek-test"
-      label: "DeepSeek Test"
-      description: "Experimenteller Cloud-Modus für unkritische Tests über OpenRouter."
+      label: "DeepSeek Test (Cloud)"
+      description: "Experimenteller CLOUD-Modus für unkritische Tests über OpenRouter. Keine Patientendaten eingeben."
       group: "Testmodelle"
       showIconInMenu: true
       fileSearch: false
@@ -125,6 +128,7 @@ modelSpecs:
         model: "mvp-deepseek-v4"
         temperature: 0.4
         promptPrefix: |
+          Arbeitsmodus: CLOUD. Dieser Modus ist nur fuer technische und unkritische Tests vorgesehen.
           Du bist ein Testmodell für unkritische Aufgaben. Verarbeite keine Patientendaten oder vertraulichen Praxisdaten.
 
 registration:

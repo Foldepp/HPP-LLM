@@ -55,7 +55,7 @@ class PraxisSensitiveDataGuardrail(CustomGuardrail):
         if self._contains_sensitive_practice_data(text):
             raise Exception(
                 "Diese Anfrage sieht nach Patientendaten oder Gesundheitsdaten aus. "
-                "Bitte nutze dafuer den Modus 'Praxis Sicher', damit die Verarbeitung lokal bleibt."
+                "Bitte nutze dafuer den Modus 'Praxis Sicher (lokal)', damit die Verarbeitung lokal bleibt."
             )
 
         return data
@@ -79,7 +79,7 @@ class PraxisSensitiveDataGuardrail(CustomGuardrail):
         if self._contains_sensitive_practice_data(text):
             raise Exception(
                 "Diese Anfrage sieht nach Patientendaten oder Gesundheitsdaten aus. "
-                "Bitte nutze dafuer den Modus 'Praxis Sicher', damit die Verarbeitung lokal bleibt."
+                "Bitte nutze dafuer den Modus 'Praxis Sicher (lokal)', damit die Verarbeitung lokal bleibt."
             )
 
         return inputs if isinstance(inputs, dict) else {"texts": [text]}
