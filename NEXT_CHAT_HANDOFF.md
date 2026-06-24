@@ -18,6 +18,7 @@ Wir bauen ein Corporate LLM fuer einen Heilpraktiker-Mustercase, das spaeter zug
 - Lokale Embeddings ueber Ollama `nomic-embed-text`
 - Datenschutz-Guardrail in `praxis_guardrail.py`, der sensible Inhalte vor Cloud-Modellen blockiert
 - RAG/Wissenssuche wurde mit synthetischen Dokumenten getestet
+- HPP/Artemis-Branding wurde auf die eigentliche LibreChat-App angewendet
 
 ## Lokale URLs
 
@@ -36,6 +37,7 @@ Wir bauen ein Corporate LLM fuer einen Heilpraktiker-Mustercase, das spaeter zug
 - `librechat-overlay/praxis_guardrail.py` - Datenschutz-Guardrail
 - `librechat-overlay/docker-compose.override.yml` - Docker-Ergaenzungen
 - `scripts/apply-librechat-overlay.sh` - kopiert die Overlay-Dateien in einen LibreChat-Klon
+- `scripts/apply-librechat-branding.sh` - injiziert HPP-Theme, App-Titel und Logo in den laufenden LibreChat-Container
 
 ## Secrets
 
@@ -48,7 +50,8 @@ Keys liegen lokal in `vendor/LibreChat/.env` und werden nicht committed. Keine A
 3. Overlay-Dateien mit `./scripts/apply-librechat-overlay.sh` nach `vendor/LibreChat/` kopieren.
 4. `.env` lokal anlegen und OpenRouter-/DeepSeek-/sonstige Keys eintragen.
 5. Docker starten.
-6. `http://localhost:3080/login` oeffnen.
+6. HPP-Branding mit `./scripts/apply-librechat-branding.sh` anwenden.
+7. `http://localhost:3080/login` oeffnen.
 
 ## Naechste sinnvolle Schritte
 

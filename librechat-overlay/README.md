@@ -25,3 +25,13 @@ cp librechat-overlay/praxis_guardrail.py vendor/LibreChat/praxis_guardrail.py
 ```
 
 Die Datei `vendor/LibreChat/.env` bleibt lokal und enthaelt API Keys. Sie gehoert nicht ins Git-Repository.
+
+## HPP-Branding anwenden
+
+Nach dem Start oder Recreate des LibreChat-Containers:
+
+```bash
+./scripts/apply-librechat-branding.sh
+```
+
+Das Skript injiziert `client-branding/hpp-theme.css`, `client-branding/hpp-theme.js` und das HPP/Artemis-Logo in den laufenden LibreChat-Container. Nach einem Container-Recreate muss es erneut ausgefuehrt werden.

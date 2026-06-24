@@ -4,6 +4,17 @@ services:
       - mongodb
       - rag_api
       - litellm
+    environment:
+      - APP_TITLE=HPP Corporate LLM
+      - CUSTOM_FOOTER=HPP Corporate LLM · Praxis Sicher (lokal) für vertrauliche Daten
+      - REACT_APP_THEME_TEXT_PRIMARY=75 59 69
+      - REACT_APP_THEME_TEXT_SECONDARY=116 107 112
+      - REACT_APP_THEME_SURFACE_PRIMARY=255 248 242
+      - REACT_APP_THEME_SURFACE_SECONDARY=255 241 232
+      - REACT_APP_THEME_SURFACE_TERTIARY=246 250 239
+      - REACT_APP_THEME_SURFACE_SUBMIT=184 111 131
+      - REACT_APP_THEME_SURFACE_SUBMIT_HOVER=159 93 113
+      - REACT_APP_THEME_BRAND_PURPLE=184 111 131
     volumes:
       - type: bind
         source: ./librechat.yaml

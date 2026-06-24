@@ -55,6 +55,12 @@ cd vendor/LibreChat
 docker compose up -d
 ```
 
+6. HPP-Branding fuer die laufende App anwenden:
+
+```bash
+./scripts/apply-librechat-branding.sh
+```
+
 Danach: `http://localhost:3080/login`
 
 Die statische Webseite liegt unter `website-template/index.html`.
@@ -69,6 +75,7 @@ Die statische Webseite liegt unter `website-template/index.html`.
 - Lokale Embeddings ueber `nomic-embed-text`
 - RAG-Test mit synthetischen Praxisdokumenten
 - LiteLLM-Guardrail gegen versehentliche Cloud-Verarbeitung sensibler Inhalte
+- HPP/Artemis-Branding fuer die LibreChat-App
 - KMU-taugliche Landing-/Showcase-Seite fuer Artemis Intelligence
 
 ## Hinweis
