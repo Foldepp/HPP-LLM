@@ -12,6 +12,12 @@ Diese Dateien sind die projektspezifischen Anpassungen fuer LibreChat. Der kompl
 ## Anwenden
 
 ```bash
+./scripts/apply-librechat-overlay.sh
+```
+
+Alternativ manuell:
+
+```bash
 cp librechat-overlay/librechat.yaml vendor/LibreChat/librechat.yaml
 cp librechat-overlay/litellm.config.yaml vendor/LibreChat/litellm.config.yaml
 cp librechat-overlay/docker-compose.override.yml vendor/LibreChat/docker-compose.override.yml

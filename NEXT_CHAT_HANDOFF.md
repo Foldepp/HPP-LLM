@@ -35,6 +35,7 @@ Wir bauen ein Corporate LLM fuer einen Heilpraktiker-Mustercase, das spaeter zug
 - `librechat-overlay/litellm.config.yaml` - Modellrouting
 - `librechat-overlay/praxis_guardrail.py` - Datenschutz-Guardrail
 - `librechat-overlay/docker-compose.override.yml` - Docker-Ergaenzungen
+- `scripts/apply-librechat-overlay.sh` - kopiert die Overlay-Dateien in einen LibreChat-Klon
 
 ## Secrets
 
@@ -44,7 +45,7 @@ Keys liegen lokal in `vendor/LibreChat/.env` und werden nicht committed. Keine A
 
 1. Repo klonen.
 2. LibreChat nach `vendor/LibreChat/` klonen.
-3. Overlay-Dateien aus `librechat-overlay/` nach `vendor/LibreChat/` kopieren.
+3. Overlay-Dateien mit `./scripts/apply-librechat-overlay.sh` nach `vendor/LibreChat/` kopieren.
 4. `.env` lokal anlegen und OpenRouter-/DeepSeek-/sonstige Keys eintragen.
 5. Docker starten.
 6. `http://localhost:3080/login` oeffnen.
@@ -53,9 +54,8 @@ Keys liegen lokal in `vendor/LibreChat/.env` und werden nicht committed. Keine A
 
 1. Staerkeres lokales Modell testen, weil `llama3.2:3b` nur MVP-tauglich ist.
 2. Einen gefuehrten Demo-Ablauf fuer Kundentermine bauen.
-3. Ein kleines Restore-/Install-Skript schreiben, damit Overlay und Start weniger manuell sind.
-4. Spaeter: Kostenmonitoring, Rollen/Rechte, Backup-Konzept und DSGVO-Dokumentation schaerfen.
+3. Spaeter: Kostenmonitoring, Rollen/Rechte, Backup-Konzept und DSGVO-Dokumentation schaerfen.
 
 ## Produktlogik
 
-Fuer Heilpraktiker ist `Praxis Sicher` der Standard fuer vertrauliche Daten. Cloud-Modi sind nur fuer unkritische Texte, Marketing, allgemeine Vorlagen oder anonymisierte Inhalte gedacht. Das ist der Kern des Beratungsarguments fuer KMU: lokale Sensibilitaet plus Cloud-Leistung dort, wo sie vertretbar ist.
+Fuer Heilpraktiker ist `Praxis Sicher (lokal)` der Standard fuer vertrauliche Daten. Cloud-Modi sind nur fuer unkritische Texte, Marketing, allgemeine Vorlagen oder anonymisierte Inhalte gedacht. Das ist der Kern des Beratungsarguments fuer KMU: lokale Sensibilitaet plus Cloud-Leistung dort, wo sie vertretbar ist.

@@ -19,7 +19,7 @@ Wir bauen keine reine Werbeseite, sondern einen nutzbaren Corporate-LLM-Musterca
 - `specs/` - MVP-Spezifikationen, technische Entscheidungen, Roadmap und Umsetzungschecklisten
 - `demo-documents/heilpraktiker/` - synthetische Beispiel-Dokumente fuer RAG/Wissenssuche
 - `librechat-overlay/` - unsere LibreChat-Anpassungen ohne kompletten LibreChat-Klon
-- `scripts/` - kleine Hilfsskripte fuer die lokale Vorschau
+- `scripts/` - kleine Hilfsskripte fuer Vorschau und Wiederherstellung
 
 ## Bewusst nicht im Repo
 
@@ -33,6 +33,12 @@ Wir bauen keine reine Werbeseite, sondern einen nutzbaren Corporate-LLM-Musterca
 1. Dieses Repo klonen.
 2. LibreChat frisch nach `vendor/LibreChat/` klonen.
 3. Die Dateien aus `librechat-overlay/` in den LibreChat-Ordner kopieren:
+
+```bash
+./scripts/apply-librechat-overlay.sh
+```
+
+Alternativ manuell:
 
 ```bash
 cp librechat-overlay/librechat.yaml vendor/LibreChat/librechat.yaml
