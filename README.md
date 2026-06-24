@@ -75,7 +75,7 @@ Die statische Webseite liegt unter `website-template/index.html`.
 - Lokale Embeddings ueber `nomic-embed-text`
 - RAG-Test mit synthetischen Praxisdokumenten
 - LiteLLM-Guardrail gegen versehentliche Cloud-Verarbeitung sensibler Inhalte
-- HPP/Artemis-Branding fuer die LibreChat-App
+- HPP/Artemis-Branding fuer die LibreChat-App inklusive dezenter Skizzen- und Farbelemente
 - KMU-taugliche Landing-/Showcase-Seite fuer Artemis Intelligence
 
 ## Hinweis

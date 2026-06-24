@@ -38,11 +38,22 @@ html,
 body,
 #root {
   background:
-    radial-gradient(circle at 14% 10%, rgba(244, 197, 202, 0.52), transparent 20rem),
-    radial-gradient(circle at 88% 12%, rgba(199, 222, 244, 0.72), transparent 22rem),
-    radial-gradient(circle at 82% 88%, rgba(207, 233, 218, 0.62), transparent 24rem),
+    linear-gradient(122deg, rgba(244, 197, 202, 0.3) 0 18%, transparent 18% 100%),
+    linear-gradient(42deg, transparent 0 56%, rgba(207, 233, 218, 0.34) 56% 76%, transparent 76% 100%),
+    linear-gradient(166deg, transparent 0 72%, rgba(216, 169, 79, 0.18) 72% 84%, transparent 84% 100%),
     linear-gradient(160deg, #fff8f2 0%, #fff1e8 46%, #f7f0ff 100%) !important;
   color: var(--hpp-ink);
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
 }
 
 body {
@@ -54,8 +65,149 @@ body {
 
 #loading-container {
   background:
-    radial-gradient(circle at 18% 16%, rgba(244, 197, 202, 0.58), transparent 18rem),
+    linear-gradient(128deg, rgba(244, 197, 202, 0.3) 0 24%, transparent 24% 100%),
+    linear-gradient(42deg, transparent 0 58%, rgba(207, 233, 218, 0.32) 58% 78%, transparent 78% 100%),
     linear-gradient(160deg, #fff8f2 0%, #fff1e8 48%, #f7f0ff 100%) !important;
+}
+
+#hpp-visual-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hpp-sketch,
+.hpp-color-wash {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.hpp-color-wash {
+  border-radius: 8px;
+  opacity: 0.22;
+  filter: blur(0.2px);
+}
+
+.hpp-color-wash-rose {
+  left: -7vw;
+  top: 12vh;
+  width: 30vw;
+  height: 18vh;
+  background: linear-gradient(135deg, rgba(244, 197, 202, 0.34), rgba(255, 217, 189, 0.12));
+  transform: rotate(-11deg);
+}
+
+.hpp-color-wash-mint {
+  right: -8vw;
+  top: 20vh;
+  width: 34vw;
+  height: 20vh;
+  background: linear-gradient(135deg, rgba(207, 233, 218, 0.36), rgba(199, 222, 244, 0.16));
+  transform: rotate(13deg);
+}
+
+.hpp-color-wash-gold {
+  right: 16vw;
+  bottom: -8vh;
+  width: 28vw;
+  height: 16vh;
+  background: linear-gradient(135deg, rgba(216, 169, 79, 0.18), rgba(255, 217, 189, 0.14));
+  transform: rotate(-6deg);
+}
+
+.hpp-sketch-branch {
+  left: clamp(20px, 6vw, 80px);
+  bottom: clamp(92px, 14vh, 160px);
+  width: min(34vw, 320px);
+  height: min(16vh, 130px);
+  border-bottom: 2px solid rgba(83, 107, 60, 0.28);
+  border-left: 2px solid rgba(83, 107, 60, 0.2);
+  border-radius: 0 0 0 90%;
+  transform: rotate(-7deg);
+}
+
+.hpp-sketch-branch::before,
+.hpp-sketch-branch::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  background: rgba(83, 107, 60, 0.24);
+  transform-origin: left center;
+}
+
+.hpp-sketch-branch::before {
+  left: 22%;
+  bottom: 34%;
+  width: 30%;
+  transform: rotate(-28deg);
+}
+
+.hpp-sketch-branch::after {
+  left: 52%;
+  bottom: 14%;
+  width: 24%;
+  transform: rotate(-38deg);
+}
+
+.hpp-sketch-leaf {
+  width: 56px;
+  height: 30px;
+  border: 2px solid rgba(143, 176, 114, 0.34);
+  border-radius: 60% 40% 60% 40%;
+  background: rgba(246, 250, 239, 0.22);
+}
+
+.hpp-sketch-leaf::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 16%;
+  top: 50%;
+  height: 1px;
+  background: rgba(143, 176, 114, 0.28);
+  transform: rotate(-8deg);
+}
+
+.hpp-sketch-leaf-one {
+  left: clamp(80px, 18vw, 220px);
+  bottom: clamp(142px, 20vh, 220px);
+  transform: rotate(-28deg);
+}
+
+.hpp-sketch-leaf-two {
+  right: clamp(36px, 10vw, 120px);
+  top: clamp(112px, 18vh, 190px);
+  transform: rotate(24deg);
+}
+
+.hpp-sketch-thread {
+  left: 50%;
+  top: 88px;
+  width: 2px;
+  height: clamp(78px, 16vh, 150px);
+  background: linear-gradient(180deg, rgba(216, 169, 79, 0), rgba(216, 169, 79, 0.32), rgba(216, 169, 79, 0));
+  transform: translateX(-50%);
+}
+
+.hpp-sketch-thread::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(216, 169, 79, 0.32);
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-radius: 50%;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.bg-presentation {
+  background-color: rgba(255, 248, 242, 0.72) !important;
 }
 
 button,

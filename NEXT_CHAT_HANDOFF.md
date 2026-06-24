@@ -18,7 +18,7 @@ Wir bauen ein Corporate LLM fuer einen Heilpraktiker-Mustercase, das spaeter zug
 - Lokale Embeddings ueber Ollama `nomic-embed-text`
 - Datenschutz-Guardrail in `praxis_guardrail.py`, der sensible Inhalte vor Cloud-Modellen blockiert
 - RAG/Wissenssuche wurde mit synthetischen Dokumenten getestet
-- HPP/Artemis-Branding wurde auf die eigentliche LibreChat-App angewendet
+- HPP/Artemis-Branding wurde auf die eigentliche LibreChat-App angewendet, inklusive warmer Farbwelt und dezenter Skizzen-/Farbelemente
 
 ## Lokale URLs
 

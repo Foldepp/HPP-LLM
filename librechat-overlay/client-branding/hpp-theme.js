@@ -122,4 +122,30 @@
   if (metaTheme) {
     metaTheme.setAttribute("content", "#fff8f2");
   }
+
+  function ensureVisualLayer() {
+    if (!document.body || document.getElementById("hpp-visual-layer")) {
+      return;
+    }
+
+    var layer = document.createElement("div");
+    layer.id = "hpp-visual-layer";
+    layer.setAttribute("aria-hidden", "true");
+    layer.innerHTML = [
+      '<span class="hpp-sketch hpp-sketch-branch"></span>',
+      '<span class="hpp-sketch hpp-sketch-leaf hpp-sketch-leaf-one"></span>',
+      '<span class="hpp-sketch hpp-sketch-leaf hpp-sketch-leaf-two"></span>',
+      '<span class="hpp-sketch hpp-sketch-thread"></span>',
+      '<span class="hpp-color-wash hpp-color-wash-rose"></span>',
+      '<span class="hpp-color-wash hpp-color-wash-mint"></span>',
+      '<span class="hpp-color-wash hpp-color-wash-gold"></span>'
+    ].join("");
+    document.body.prepend(layer);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", ensureVisualLayer, { once: true });
+  } else {
+    ensureVisualLayer();
+  }
 })();
