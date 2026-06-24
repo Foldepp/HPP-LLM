@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="458" height="192" viewBox="0 0 458 192" role="img" aria-labelledby="title desc">
+  <title id="title">ARTEMIS Intelligence logo</title>
+  <desc id="desc">ARTEMIS Intelligence wordmark with red A and I initials.</desc>
+  <rect x="9" y="8" width="440" height="176" rx="30" fill="#fbfbfb"/>
+
+  <g transform="translate(0 1)">
+    <path d="M134.7 41.6A60.8 60.8 0 0 0 46.1 126.4" fill="none" stroke="#d6d7d9" stroke-width="16" stroke-linecap="butt"/>
+    <path d="M88.2 52.4A31.3 31.3 0 0 0 57.8 82.7H88.2Z" fill="#ffc400"/>
+    <path d="M93.8 52.4V82.7H124.2A31.3 31.3 0 0 0 93.8 52.4Z" fill="#e94955"/>
+    <path d="M57.8 88.3A31.3 31.3 0 0 0 88.2 118.6V88.3Z" fill="#f47b39"/>
+  </g>
+
+  <g font-family="Helvetica Neue, Arial, sans-serif" font-weight="300" fill="#a8aaad">
+    <text y="134" font-size="47">
+      <tspan x="100" fill="#e94955">A</tspan>
+      <tspan x="153">R</tspan>
+      <tspan x="207">T</tspan>
+      <tspan x="259">E</tspan>
+      <tspan x="312">M</tspan>
+      <tspan x="374">I</tspan>
+      <tspan x="408">S</tspan>
+    </text>
+    <text x="100" y="178" font-size="47" fill="#e94955">I</text>
+    <text x="123" y="178" font-size="31" letter-spacing="1.1">ntelligence</text>
+  </g>
+</svg>

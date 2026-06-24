@@ -1,0 +1,171 @@
+version: 1.3.13
+cache: true
+
+fileStrategy: "local"
+
+interface:
+  customWelcome: "Willkommen im sicheren KI-Arbeitsplatz für KMUs."
+  fileSearch: true
+  modelSelect: true
+  parameters: false
+  presets: false
+  prompts:
+    use: true
+    create: true
+    share: false
+    public: false
+  bookmarks: true
+  multiConvo: true
+  agents:
+    use: true
+    create: true
+    share: false
+    public: false
+  peoplePicker:
+    users: true
+    groups: true
+    roles: true
+  marketplace:
+    use: false
+  fileCitations: true
+  sharedLinks:
+    create: false
+    share: false
+    public: false
+    snapshotFiles: false
+  privacyPolicy:
+    externalUrl: "http://localhost:3080/legal/privacy"
+    openNewTab: true
+  termsOfService:
+    externalUrl: "http://localhost:3080/legal/terms"
+    openNewTab: true
+    modalAcceptance: false
+
+modelSpecs:
+  prioritize: true
+  enforce: false
+  addedEndpoints:
+    - "KMU AI Gateway"
+    - "agents"
+  list:
+    - name: "praxis-sicher"
+      label: "Praxis Sicher"
+      description: "Lokaler Modus für Patientendaten, Praxisdokumente und vertrauliche Notizen."
+      group: "Praxis-Modi"
+      groupIcon: "custom"
+      default: true
+      showOnLanding: true
+      showIconInMenu: true
+      showIconInHeader: true
+      fileSearch: true
+      preset:
+        endpoint: "KMU AI Gateway"
+        model: "mvp-local-sensitive"
+        temperature: 0.2
+        promptPrefix: |
+          Du bist der lokale Praxis-Sicher-Assistent einer Heilpraktikerpraxis.
+          Verarbeite vertrauliche Praxis- und Patientendaten nur unterstützend und strukturiert.
+          Stelle keine Diagnosen, gib keine Therapieentscheidungen und keine Dosierungsempfehlungen.
+          Formuliere Unsicherheiten klar und erinnere daran, dass fachliche Prüfung durch die behandelnde Person erforderlich ist.
+      conversation_starters:
+        - "Strukturiere diese Anamnesenotiz in Anliegen, Beobachtungen, Rückfragen und nächste Schritte."
+        - "Welche Inhalte dürfen laut Praxisdokumenten nur im lokalen Praxis-Sicher-Modus verarbeitet werden?"
+        - "Erstelle eine neutrale Vorlage für ein Symptomtagebuch ohne Diagnoseversprechen."
+        - "Fasse diese Verlaufsnotiz intern zusammen, ohne Diagnose oder Therapieempfehlung."
+
+    - name: "praxis-schnell"
+      label: "Praxis Schnell"
+      description: "Cloud-Modus für unkritische Texte, Organisation und allgemeine Praxisarbeit. Keine Patientendaten eingeben."
+      group: "Praxis-Modi"
+      showIconInMenu: true
+      showIconInHeader: true
+      fileSearch: false
+      preset:
+        endpoint: "KMU AI Gateway"
+        model: "mvp-standard"
+        temperature: 0.4
+        promptPrefix: |
+          Du bist der schnelle Praxis-Assistent für unkritische Aufgaben.
+          In diesem Modus dürfen keine Patientendaten, Gesundheitsdaten, Anamnesen, Laborwerte oder vertraulichen Praxisnotizen verarbeitet werden.
+          Wenn die Anfrage sensible Patientendaten enthält oder danach aussieht, lehne die Verarbeitung ab und fordere den Wechsel zu "Praxis Sicher" an.
+      conversation_starters:
+        - "Formuliere einen freundlichen Website-Abschnitt über eine Heilpraktikerpraxis, ohne Heilversprechen."
+        - "Erstelle eine interne Checkliste für Terminvorbereitung ohne Patientendaten."
+        - "Schreibe eine neutrale organisatorische E-Mail-Vorlage."
+        - "Erstelle eine kurze Terminerinnerung ohne personenbezogene Daten."
+
+    - name: "praxis-stark"
+      label: "Praxis Stark"
+      description: "Stärkeres Cloud-Modell für Konzepte, Schulungen und längere Texte. Keine Patientendaten eingeben."
+      group: "Praxis-Modi"
+      showIconInMenu: true
+      showIconInHeader: true
+      fileSearch: false
+      preset:
+        endpoint: "KMU AI Gateway"
+        model: "mvp-premium"
+        temperature: 0.35
+        promptPrefix: |
+          Du bist der starke Praxis-Assistent für nicht-sensitive Konzepte, Schulungen und allgemeine Textarbeit.
+          Verarbeite keine Patientendaten oder Gesundheitsdaten. Wenn solche Inhalte auftauchen, fordere den Wechsel zu "Praxis Sicher" an.
+      conversation_starters:
+        - "Entwirf eine Schulungsstruktur: sichere KI-Nutzung in kleinen Praxen."
+        - "Erstelle ein Beratungskonzept für KMUs mit sensiblen Daten."
+        - "Schärfe diese Landingpage-Botschaft für eine AI-Beratung."
+        - "Formuliere eine 10-Minuten-Demo-Story für den Heilpraktiker-Mustercase."
+
+    - name: "deepseek-test"
+      label: "DeepSeek Test"
+      description: "Experimenteller Cloud-Modus für unkritische Tests über OpenRouter."
+      group: "Testmodelle"
+      showIconInMenu: true
+      fileSearch: false
+      preset:
+        endpoint: "KMU AI Gateway"
+        model: "mvp-deepseek-v4"
+        temperature: 0.4
+        promptPrefix: |
+          Du bist ein Testmodell für unkritische Aufgaben. Verarbeite keine Patientendaten oder vertraulichen Praxisdaten.
+
+registration:
+  socialLogins: []
+
+rateLimits:
+  fileUploads:
+    ipMax: 50
+    ipWindowInMinutes: 60
+    userMax: 25
+    userWindowInMinutes: 60
+
+actions:
+  allowedDomains: []
+
+endpoints:
+  agents:
+    disableBuilder: false
+    recursionLimit: 25
+    maxRecursionLimit: 50
+    maxCitations: 20
+    maxCitationsPerFile: 6
+    minRelevanceScore: 0.45
+    capabilities:
+      - "file_search"
+      - "tools"
+
+  custom:
+    - name: "KMU AI Gateway"
+      apiKey: "${LITELLM_MASTER_KEY}"
+      baseURL: "${LITELLM_BASE_URL}"
+      models:
+        default:
+          - "mvp-standard"
+          - "mvp-premium"
+          - "mvp-deepseek-v4"
+          - "mvp-local-sensitive"
+        fetch: false
+      titleConvo: true
+      titleModel: "mvp-standard"
+      summarize: false
+      modelDisplayLabel: "KMU AI"
+      dropParams:
+        - "user"

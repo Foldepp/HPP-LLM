@@ -1,0 +1,18 @@
+.DS_Store
+.playwright-mcp/
+corporatellm-login.png
+node_modules/
+__pycache__/
+*.pyc
+.env
+*.env
+
+# Local runtime data and secrets
+vendor/LibreChat/
+vendor/LibreChat/.env
+vendor/LibreChat/data-node/
+vendor/LibreChat/meili_data*/
+vendor/LibreChat/uploads/
+vendor/LibreChat/images/
+vendor/LibreChat/logs/
+vendor/LibreChat/litellm-data/

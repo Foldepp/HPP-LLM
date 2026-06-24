@@ -1,0 +1,44 @@
+model_list:
+  - model_name: mvp-standard
+    litellm_params:
+      model: openrouter/openai/gpt-4o-mini
+      api_base: https://openrouter.ai/api/v1
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: mvp-premium
+    litellm_params:
+      model: openrouter/openai/gpt-4o
+      api_base: https://openrouter.ai/api/v1
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: mvp-deepseek-v4
+    litellm_params:
+      model: openrouter/deepseek/deepseek-v4-flash
+      api_base: https://openrouter.ai/api/v1
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: mvp-local-sensitive
+    litellm_params:
+      model: ollama_chat/llama3.2:3b
+      api_base: http://ollama:11434
+
+  - model_name: mvp-embedding
+    litellm_params:
+      model: ollama/nomic-embed-text
+      api_base: http://ollama:11434
+
+guardrails:
+  - guardrail_name: praxis-sensitive-data
+    litellm_params:
+      guardrail: praxis_guardrail.PraxisSensitiveDataGuardrail
+      mode: pre_call
+      default_on: true
+      skip_system_message_in_guardrail: true
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+
+litellm_settings:
+  drop_params: true
+  skip_system_message_in_guardrail: true
+  set_verbose: false

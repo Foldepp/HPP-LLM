@@ -1,0 +1,56 @@
+services:
+  api:
+    depends_on:
+      - mongodb
+      - rag_api
+      - litellm
+    volumes:
+      - type: bind
+        source: ./librechat.yaml
+        target: /app/librechat.yaml
+
+  rag_api:
+    depends_on:
+      - vectordb
+      - litellm
+      - ollama
+
+  litellm:
+    container_name: litellm
+    image: ghcr.io/berriai/litellm:main-latest
+    restart: always
+    depends_on:
+      - ollama
+    ports:
+      - "4000:4000"
+    environment:
+      - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GOOGLE_KEY=${GOOGLE_KEY}
+      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
+      - OLLAMA_API_BASE=http://ollama:11434
+    volumes:
+      - ./litellm.config.yaml:/app/config.yaml
+      - ./praxis_guardrail.py:/app/praxis_guardrail.py
+    command:
+      - "--config"
+      - "/app/config.yaml"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "4000"
+
+  ollama:
+    container_name: ollama
+    image: ollama/ollama:latest
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+
+volumes:
+  ollama:
