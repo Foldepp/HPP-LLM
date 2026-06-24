@@ -1,4 +1,61 @@
 (function () {
+  var workflows = [
+    {
+      id: "anamnese",
+      title: "Anamnese strukturieren",
+      eyebrow: "Praxis Sicher",
+      mode: "Lokal",
+      spec: "praxis-sicher",
+      prompt:
+        "Bitte strukturiere folgende Anamnesenotiz fuer die interne Praxisdokumentation. Arbeite ohne Diagnose, Therapieentscheidung oder Dosierungsempfehlung. Gib aus: 1. Anliegen, 2. relevante Beobachtungen, 3. offene Rueckfragen, 4. organisatorische naechste Schritte, 5. Hinweise zur fachlichen Pruefung.\\n\\nNotiz:\\n"
+    },
+    {
+      id: "patientenmail",
+      title: "Patientenkommunikation",
+      eyebrow: "Praxis Sicher",
+      mode: "Lokal",
+      spec: "praxis-sicher",
+      prompt:
+        "Erstelle aus den folgenden Stichpunkten einen freundlichen, neutralen Entwurf fuer eine Patientennachricht. Keine Heilversprechen, keine Diagnose, keine Therapieentscheidung. Markiere Stellen, die fachlich geprueft werden muessen.\\n\\nStichpunkte:\\n"
+    },
+    {
+      id: "wissen",
+      title: "Praxiswissen fragen",
+      eyebrow: "Wissensbasis",
+      mode: "Lokal/RAG",
+      spec: "praxis-sicher",
+      prompt:
+        "Beantworte die folgende Frage nur anhand der verfuegbaren Praxisdokumente. Nenne die relevanten Quellen oder sage klar, wenn die Wissensbasis dafuer nicht ausreicht.\\n\\nFrage:\\n"
+    },
+    {
+      id: "dsgvo",
+      title: "DSGVO-Check",
+      eyebrow: "Sicherheitslogik",
+      mode: "Lokal",
+      spec: "praxis-sicher",
+      prompt:
+        "Pruefe den folgenden Arbeitsvorgang aus Datenschutzsicht fuer eine Heilpraktikerpraxis. Gib aus: Datenarten, Sensibilitaet, lokaler/Cloud-Modus, Risiken, empfohlene Schutzmassnahmen und offene Prueffragen. Keine Rechtsberatung behaupten.\\n\\nVorgang:\\n"
+    },
+    {
+      id: "marketing",
+      title: "Marketing ohne Heilversprechen",
+      eyebrow: "Praxis Schnell",
+      mode: "Cloud erlaubt",
+      spec: "praxis-schnell",
+      prompt:
+        "Formuliere einen unkritischen Marketingtext fuer eine Heilpraktikerpraxis. Keine Patientendaten, keine Heilversprechen, keine irrefuehrenden Wirkaussagen. Ton: warm, professionell, klar.\\n\\nThema:\\n"
+    },
+    {
+      id: "kundendemo",
+      title: "Kundendemo starten",
+      eyebrow: "Showcase",
+      mode: "Cloud ohne sensible Daten",
+      spec: "praxis-stark",
+      prompt:
+        "Erstelle eine kurze Live-Demo-Story fuer das HPP Corporate LLM als KMU-Showcase. Zeige: lokaler Modus fuer sensible Daten, Cloud-Modus fuer unkritische Aufgaben, Wissensbasis mit Quellen, Datenschutz-Guardrail und Business-Nutzen. Keine echten Patientendaten verwenden."
+    }
+  ];
+
   var themeName = "hpp-artemis";
   var theme = {
     "rgb-text-primary": "75 59 69",
@@ -143,9 +200,179 @@
     document.body.prepend(layer);
   }
 
+  function findPromptInput() {
+    return (
+      document.querySelector('#prompt-textarea[data-testid="text-input"]') ||
+      document.querySelector("#prompt-textarea") ||
+      document.querySelector('textarea[data-testid="text-input"]') ||
+      document.querySelector('textarea[aria-label="Nachrichteneingabe"]') ||
+      document.querySelector('textarea[placeholder*="Nachricht"]') ||
+      document.querySelector('textarea[placeholder*="Message"]') ||
+      document.querySelector("textarea") ||
+      document.querySelector('[contenteditable="true"]')
+    );
+  }
+
+  function setPromptText(text) {
+    var input = findPromptInput();
+    if (!input) {
+      return false;
+    }
+
+    input.focus();
+    if (input.tagName === "TEXTAREA" || input.tagName === "INPUT") {
+      var setter = Object.getOwnPropertyDescriptor(input.constructor.prototype, "value").set;
+      setter.call(input, text);
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    } else {
+      input.textContent = text;
+      input.dispatchEvent(new InputEvent("input", { bubbles: true, inputType: "insertText", data: text }));
+    }
+    return true;
+  }
+
+  function showDashboardStatus(message) {
+    var status = document.getElementById("hpp-workflow-status");
+    if (!status) {
+      return;
+    }
+    status.textContent = message;
+    status.removeAttribute("hidden");
+  }
+
+  function applyPendingWorkflow() {
+    var raw;
+    try {
+      raw = sessionStorage.getItem("hpp-pending-workflow");
+    } catch (error) {
+      return;
+    }
+    if (!raw) {
+      var params = new URLSearchParams(window.location.search);
+      var prompt = params.get("prompt");
+      if (!prompt) {
+        return;
+      }
+      pending = {
+        title: "Praxis-Workflow",
+        prompt: prompt
+      };
+    } else {
+      try {
+        pending = JSON.parse(raw);
+      } catch (error) {
+        sessionStorage.removeItem("hpp-pending-workflow");
+        return;
+      }
+    }
+
+    var attempts = 0;
+    var timer = window.setInterval(function () {
+      attempts += 1;
+      if (setPromptText(pending.prompt)) {
+        sessionStorage.removeItem("hpp-pending-workflow");
+        showDashboardStatus('Workflow "' + pending.title + '" ist vorbereitet. Bitte pruefen und senden.');
+        window.clearInterval(timer);
+      } else if (attempts >= 40) {
+        showDashboardStatus("Workflow konnte nicht automatisch eingefuegt werden. Bitte Kachel erneut waehlen.");
+        window.clearInterval(timer);
+      }
+    }, 250);
+  }
+
+  function startWorkflow(workflow) {
+    try {
+      sessionStorage.setItem(
+        "hpp-pending-workflow",
+        JSON.stringify({ title: workflow.title, prompt: workflow.prompt, spec: workflow.spec })
+      );
+    } catch (error) {
+      // If storage is blocked, the URL prompt is used as a fallback after navigation.
+    }
+
+    var url = new URL("/c/new", window.location.origin);
+    url.searchParams.set("spec", workflow.spec);
+    url.searchParams.set("prompt", workflow.prompt);
+    window.location.assign(url.toString());
+  }
+
+  function ensureWorkflowDashboard() {
+    if (!document.body || document.getElementById("hpp-workflow-dashboard")) {
+      return;
+    }
+
+    var shell = document.createElement("section");
+    shell.id = "hpp-workflow-dashboard";
+    shell.setAttribute("aria-label", "HPP Praxis-Dashboard");
+    shell.innerHTML = [
+      '<button class="hpp-dashboard-toggle" type="button" aria-expanded="false" aria-controls="hpp-dashboard-panel">',
+      '  <span class="hpp-dashboard-toggle-icon" aria-hidden="true"></span>',
+      "  Praxis-Dashboard",
+      "</button>",
+      '<div class="hpp-dashboard-panel" id="hpp-dashboard-panel" hidden>',
+      '  <div class="hpp-dashboard-head">',
+      "    <div>",
+      '      <p class="hpp-dashboard-kicker">HPP Corporate LLM</p>',
+      "      <h2>Arbeitsbereiche statt nur Chat</h2>",
+      "    </div>",
+      '    <button class="hpp-dashboard-close" type="button" aria-label="Praxis-Dashboard schliessen">&times;</button>',
+      "  </div>",
+      '  <p class="hpp-dashboard-copy">Waehle einen Praxis-Workflow. Der passende Modus wird geoeffnet und der Arbeitsauftrag im Chat vorbereitet.</p>',
+      '  <div class="hpp-workflow-grid"></div>',
+      '  <p class="hpp-workflow-status" id="hpp-workflow-status" hidden></p>',
+      "</div>"
+    ].join("");
+
+    var grid = shell.querySelector(".hpp-workflow-grid");
+    workflows.forEach(function (workflow) {
+      var card = document.createElement("button");
+      card.type = "button";
+      card.className = "hpp-workflow-card";
+      card.setAttribute("data-workflow-id", workflow.id);
+      card.innerHTML = [
+        '<span class="hpp-workflow-eyebrow">' + workflow.eyebrow + "</span>",
+        "<strong>" + workflow.title + "</strong>",
+        '<span class="hpp-workflow-mode">' + workflow.mode + "</span>"
+      ].join("");
+      card.addEventListener("click", function () {
+        startWorkflow(workflow);
+      });
+      grid.appendChild(card);
+    });
+
+    var toggle = shell.querySelector(".hpp-dashboard-toggle");
+    var panel = shell.querySelector(".hpp-dashboard-panel");
+    var close = shell.querySelector(".hpp-dashboard-close");
+
+    function setOpen(open) {
+      panel.hidden = !open;
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    toggle.addEventListener("click", function () {
+      setOpen(panel.hidden);
+    });
+    close.addEventListener("click", function () {
+      setOpen(false);
+    });
+
+    document.body.appendChild(shell);
+  }
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", ensureVisualLayer, { once: true });
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+        ensureVisualLayer();
+        ensureWorkflowDashboard();
+        applyPendingWorkflow();
+      },
+      { once: true }
+    );
   } else {
     ensureVisualLayer();
+    ensureWorkflowDashboard();
+    applyPendingWorkflow();
   }
 })();

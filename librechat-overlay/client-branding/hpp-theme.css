@@ -210,6 +210,193 @@ body {
   background-color: rgba(255, 248, 242, 0.72) !important;
 }
 
+#hpp-workflow-dashboard {
+  position: fixed;
+  z-index: 60;
+  right: 16px;
+  top: 58px;
+  width: min(420px, calc(100vw - 32px));
+  color: var(--hpp-ink);
+  pointer-events: none;
+}
+
+.hpp-dashboard-toggle,
+.hpp-dashboard-panel {
+  pointer-events: auto;
+}
+
+.hpp-dashboard-toggle {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 10px;
+  float: right;
+  padding: 10px 14px;
+  border: 1px solid rgba(75, 59, 69, 0.16);
+  border-radius: 8px;
+  color: var(--hpp-ink);
+  background: rgba(255, 248, 242, 0.88);
+  box-shadow: 0 12px 30px rgba(125, 111, 120, 0.14);
+  backdrop-filter: blur(14px);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.hpp-dashboard-toggle-icon {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(83, 107, 60, 0.34);
+  border-radius: 50%;
+}
+
+.hpp-dashboard-toggle-icon::before,
+.hpp-dashboard-toggle-icon::after {
+  content: "";
+  position: absolute;
+  background: rgba(184, 111, 131, 0.68);
+}
+
+.hpp-dashboard-toggle-icon::before {
+  left: 7px;
+  top: 2px;
+  width: 2px;
+  height: 12px;
+}
+
+.hpp-dashboard-toggle-icon::after {
+  left: 2px;
+  top: 7px;
+  width: 12px;
+  height: 2px;
+}
+
+.hpp-dashboard-panel {
+  clear: both;
+  margin-top: 52px;
+  padding: 18px;
+  border: 1px solid rgba(75, 59, 69, 0.14);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.48), rgba(255, 248, 242, 0.72)),
+    linear-gradient(42deg, transparent 0 62%, rgba(207, 233, 218, 0.24) 62% 80%, transparent 80% 100%);
+  box-shadow: 0 18px 54px rgba(125, 111, 120, 0.18);
+  backdrop-filter: blur(18px);
+}
+
+.hpp-dashboard-panel[hidden] {
+  display: none;
+}
+
+.hpp-dashboard-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.hpp-dashboard-kicker {
+  margin: 0 0 6px;
+  color: var(--hpp-rose-deep);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hpp-dashboard-head h2 {
+  margin: 0;
+  color: var(--hpp-ink);
+  font-size: 1.25rem;
+  font-weight: 850;
+  line-height: 1.1;
+}
+
+.hpp-dashboard-close {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(75, 59, 69, 0.12);
+  border-radius: 8px;
+  color: var(--hpp-soft);
+  background: rgba(255, 255, 255, 0.52);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.hpp-dashboard-copy {
+  margin: 10px 0 16px;
+  color: var(--hpp-soft);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.hpp-workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.hpp-workflow-card {
+  display: grid;
+  min-height: 112px;
+  gap: 8px;
+  align-content: start;
+  padding: 13px;
+  border: 1px solid rgba(75, 59, 69, 0.12);
+  border-radius: 8px;
+  color: var(--hpp-ink);
+  background: rgba(255, 255, 255, 0.52);
+  box-shadow: 0 10px 22px rgba(125, 111, 120, 0.08);
+  text-align: left;
+}
+
+.hpp-workflow-card:hover {
+  border-color: rgba(184, 111, 131, 0.28);
+  background: rgba(255, 248, 242, 0.82);
+  box-shadow: 0 14px 30px rgba(125, 111, 120, 0.13);
+}
+
+.hpp-workflow-eyebrow,
+.hpp-workflow-mode {
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hpp-workflow-eyebrow {
+  color: var(--hpp-rose-deep);
+}
+
+.hpp-workflow-card strong {
+  color: var(--hpp-ink);
+  font-size: 0.94rem;
+  line-height: 1.15;
+}
+
+.hpp-workflow-mode {
+  align-self: end;
+  color: var(--hpp-leaf-deep);
+}
+
+.hpp-workflow-status {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(83, 107, 60, 0.18);
+  border-radius: 8px;
+  color: var(--hpp-leaf-deep);
+  background: rgba(246, 250, 239, 0.72);
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.hpp-workflow-status[hidden] {
+  display: none;
+}
+
 button,
 [role="button"],
 input,
@@ -267,4 +454,33 @@ button {
     border-color 160ms ease,
     color 160ms ease,
     box-shadow 160ms ease;
+}
+
+@media (max-width: 720px) {
+  #hpp-workflow-dashboard {
+    right: 12px;
+    top: 54px;
+    width: min(360px, calc(100vw - 24px));
+  }
+
+  .hpp-dashboard-toggle {
+    min-height: 38px;
+    padding: 8px 11px;
+    font-size: 0.82rem;
+  }
+
+  .hpp-dashboard-panel {
+    margin-top: 48px;
+    max-height: min(72vh, 620px);
+    overflow: auto;
+    padding: 14px;
+  }
+
+  .hpp-workflow-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hpp-workflow-card {
+    min-height: 84px;
+  }
 }
